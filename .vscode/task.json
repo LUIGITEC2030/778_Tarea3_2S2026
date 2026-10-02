@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Limpiar QEMU",
+      "type": "shell",
+      "command": "pkill -9 -f qemu-aarch64 || true; fuser -k 1234/tcp || true",
+      "problemMatcher": []
+    },
+    {
+      "label": "Compilar ARM64",
+      "type": "shell",
+      "command": "mkdir -p build && aarch64-linux-gnu-as -g -o build/prueba.o src/prueba.s && aarch64-linux-gnu-ld -o build/prueba build/prueba.o",
+      "dependsOn": ["Limpiar QEMU"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Iniciar QEMU GDB Server",
+      "type": "shell",
+      "command": "qemu-aarch64 -g 1234 ./build/prueba",
+      "isBackground": true,
+      "dependsOn": ["Compilar ARM64"],
+      "problemMatcher": {
+        "pattern": [
+          {
+            "regexp": "^.*$",
+            "file": 1,
+            "location": 2,
+            "message": 3
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*",
+          "endsPattern": "^.*"
+        }
+      }
+    }
+  ]
+}

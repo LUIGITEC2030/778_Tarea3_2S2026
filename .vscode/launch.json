@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Depurar ARM64 (F5 Automático)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/prueba",
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb-multiarch",
+      "miDebuggerServerAddress": "localhost:1234",
+      "preLaunchTask": "Iniciar QEMU GDB Server",
+      "postDebugTask": "Limpiar QEMU",
+      "setupCommands": [
+        {
+          "description": "Habilitar arquitectura ARM64",
+          "text": "set architecture aarch64",
+          "ignoreFailures": false
+        }
+      ]
+    }
+  ]
+}
